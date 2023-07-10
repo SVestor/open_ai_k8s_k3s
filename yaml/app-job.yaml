@@ -1,0 +1,19 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: backup-data
+spec:
+  schedule: "*/15 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: backup-data
+              image: busybox
+              command:
+                - sh
+                - -c
+                - cp -r /data /backups
+          restartPolicy: OnFailure

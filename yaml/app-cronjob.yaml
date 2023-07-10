@@ -1,0 +1,16 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: nginx-reboot
+spec:
+  schedule: "0 4 */2 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: nginx-reboot
+              image: nginx
+              command: ["/bin/sh", "-c", "nginx -s reload"]
+          restartPolicy: OnFailure
